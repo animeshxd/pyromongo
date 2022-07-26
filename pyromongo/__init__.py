@@ -5,7 +5,7 @@ from typing import List, Tuple, Any
 
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from pymongo import UpdateOne
-from pyrogram.storage import Storage
+from pyrogram.storage.storage import Storage
 from pyrogram.storage.sqlite_storage import get_input_peer
 
 
@@ -101,7 +101,7 @@ class MongoStorage(Storage):
         if abs(time.time() - r['last']) > self.USERNAME_TTL:
             raise KeyError(f"Username expired: {username}")
 
-        return get_input_peer(*r.values()[:3])
+        return get_input_peer(*list(r.values())[:3])
 
     async def get_peer_by_phone_number(self, phone_number: str):
 
