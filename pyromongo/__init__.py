@@ -40,7 +40,7 @@ class MongoStorage(Storage):
         """
         if await self._session.find_one({'_id': 0}, {}):
             return
-        await self._session.upate_one(
+        await self._session.update_one(
             {'_id': 0},
             {
                 'dc_id': 2,
