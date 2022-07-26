@@ -42,7 +42,7 @@ class MongoStorage(Storage):
             return
         await self._session.update_one(
             {'_id': 0},
-            {
+            {'$set': {
                 'dc_id': 2,
                 'api_id': 0,
                 'test_mode': 0,
@@ -51,7 +51,7 @@ class MongoStorage(Storage):
                 'user_id': 0,
                 'is_bot': 0,
 
-            }
+            }}
         )
 
     async def save(self):
@@ -116,7 +116,7 @@ class MongoStorage(Storage):
 
     async def _get(self):
         attr = inspect.stack()[2].function
-        return await self._session.find_one({'_id': 0}, {attr: 1})[attr]
+        return (await self._session.find_one({'_id': 0}, {attr: 1}))[attr]
 
     async def _set(self, value: Any):
         attr = inspect.stack()[2].function
