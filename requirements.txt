@@ -1,0 +1,3 @@
+motor
+pymongo
+Pyrogram
