@@ -29,7 +29,7 @@ class MongoStorage(Storage):
 
     async def open(self):
         """
-        
+
         dc_id     INTEGER PRIMARY KEY,
         api_id    INTEGER,
         test_mode INTEGER,
@@ -44,8 +44,8 @@ class MongoStorage(Storage):
             {'_id': 0},
             {'$set': {
                 'dc_id': 2,
-                'api_id': 0,
-                'test_mode': 0,
+                'api_id': None,
+                'test_mode': None,
                 'auth_key': b'',
                 'date': 0,
                 'user_id': 0,
@@ -70,13 +70,13 @@ class MongoStorage(Storage):
         """(id, access_hash, type, username, phone_number)"""
         s = int(time.time())
         bulk = [
-                UpdateOne(
-                    {'_id': i[0]},
-                    {'$set': {'access_hash': i[1], 'type': i[2], 'username': i[3], 'phone_number': i[4],
-                              'last_update_on': s}},
-                    upsert=True
-                ) for i in peers
-            ]
+            UpdateOne(
+                {'_id': i[0]},
+                {'$set': {'access_hash': i[1], 'type': i[2], 'username': i[3], 'phone_number': i[4],
+                          'last_update_on': s}},
+                upsert=True
+            ) for i in peers
+        ]
         if not bulk:
             return
         await self._peer.bulk_write(
@@ -116,11 +116,14 @@ class MongoStorage(Storage):
 
     async def _get(self):
         attr = inspect.stack()[2].function
-        return (await self._session.find_one({'_id': 0}, {attr: 1}))[attr]
+        d = await self._session.find_one({'_id': 0}, {attr: 1})
+        if not d:
+            return
+        return d[attr]
 
     async def _set(self, value: Any):
         attr = inspect.stack()[2].function
-        await self._session.update({'_id': 0}, {'$set': {attr: value}})
+        await self._session.update_one({'_id': 0}, {'$set': {attr: value}}, upsert=True)
 
     async def _accessor(self, value: Any = object):
         return await self._get() if value == object else await self._set(value)
