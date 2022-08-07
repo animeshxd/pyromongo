@@ -19,13 +19,6 @@ class MongoStorage(Storage):
         self.database = database
         self._peer = database['peers']
         self._session = database['session']
-        # self._dc_id = 2
-        # self._api_id = None
-        # self._test_mode = None
-        # self._auth_key = b''
-        # self._date = None
-        # self._user_id = None
-        # self._is_bot = False
 
     async def open(self):
         """
@@ -51,7 +44,8 @@ class MongoStorage(Storage):
                 'user_id': 0,
                 'is_bot': 0,
 
-            }}
+            }},
+            upsert=True
         )
 
     async def save(self):
@@ -63,6 +57,7 @@ class MongoStorage(Storage):
     async def delete(self):
         try:
             await self._session.delete_one({'_id': 0})
+            # await self._peer.remove({})
         except Exception as _:
             return
 
@@ -72,8 +67,13 @@ class MongoStorage(Storage):
         bulk = [
             UpdateOne(
                 {'_id': i[0]},
-                {'$set': {'access_hash': i[1], 'type': i[2], 'username': i[3], 'phone_number': i[4],
-                          'last_update_on': s}},
+                {'$set':{
+                    'access_hash': i[1], 
+                    'type': i[2], 
+                    'username': i[3], 
+                    'phone_number': i[4],
+                    'last_update_on': s
+                }},
                 upsert=True
             ) for i in peers
         ]
