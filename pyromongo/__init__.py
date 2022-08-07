@@ -13,12 +13,13 @@ class MongoStorage(Storage):
     lock: asyncio.Lock
     USERNAME_TTL = 8 * 60 * 60
 
-    def __init__(self, database: AsyncIOMotorDatabase):
+    def __init__(self, database: AsyncIOMotorDatabase, remove_peers: bool = False):
         super().__init__('')
         self.lock = asyncio.Lock()
         self.database = database
         self._peer = database['peers']
         self._session = database['session']
+        self._remove_peers = remove_peers
 
     async def open(self):
         """
@@ -33,9 +34,9 @@ class MongoStorage(Storage):
         """
         if await self._session.find_one({'_id': 0}, {}):
             return
-        await self._session.update_one(
-            {'_id': 0},
-            {'$set': {
+        await self._session.insert_one(
+            {
+                '_id': 0,
                 'dc_id': 2,
                 'api_id': None,
                 'test_mode': None,
@@ -44,8 +45,7 @@ class MongoStorage(Storage):
                 'user_id': 0,
                 'is_bot': 0,
 
-            }},
-            upsert=True
+            }
         )
 
     async def save(self):
@@ -57,7 +57,8 @@ class MongoStorage(Storage):
     async def delete(self):
         try:
             await self._session.delete_one({'_id': 0})
-            # await self._peer.remove({})
+            if self._remove_peers:
+                await self._peer.remove({})
         except Exception as _:
             return
 
@@ -67,7 +68,7 @@ class MongoStorage(Storage):
         bulk = [
             UpdateOne(
                 {'_id': i[0]},
-                {'$set':{
+                {'$set': {
                     'access_hash': i[1], 
                     'type': i[2], 
                     'username': i[3], 
