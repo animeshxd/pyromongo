@@ -1,2 +1,6 @@
 __pycache__
 .env
+build/
+diat/
+pyromongo.egg-info
+dist
