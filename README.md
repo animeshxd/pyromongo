@@ -15,7 +15,9 @@ client.storage = MongoStorage(mongo["pyrogram"])
 client.run()
 ```
 ## Note:
-  ❌ It will not work with pyrogram context manager  
+  ❌ It doesn't delete peers from the database on logout ( on purpose ).
+
+  ❌ It will not work with the pyrogram context manager.
    ```python
    async def main():
        async with Client(..) as client:
