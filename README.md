@@ -9,14 +9,12 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 client = Client(..)
 mongo = AsyncIOMotorClient("mongodb+srv://..")
-client.storage = MongoStorage(mongo["pyrogram"])
+client.storage = MongoStorage(mongo["pyrogram"], remove_peers=False) # use remove_peers=True to remove all peers on logout
 
 
 client.run()
 ```
 ## Note:
-  ❌ It doesn't delete peers from the database on logout ( on purpose ).
-
   ❌ It will not work with the pyrogram context manager.
    ```python
    async def main():
