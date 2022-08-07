@@ -3,7 +3,7 @@ Persistent Session Storage for Pyrogram with MongoDB
 
 ```python
 from pyrogram.client import Client
-from pyromongo.pyromongo import MongoStorage
+from pyromongo import MongoStorage
 from motor.motor_asyncio import AsyncIOMotorClient
 
 client = Client(..)
