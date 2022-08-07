@@ -1,4 +1,5 @@
 # pyromongo
+## INTRODUCTION 
 Persistent Session Storage for Pyrogram with MongoDB
 
 ```python
@@ -13,7 +14,6 @@ client.storage = MongoStorage(mongo["pyrogram"])
 
 client.run()
 ```
-
 ## Note:
   ❌ It will not work with pyrogram context manager  
    ```python
@@ -23,3 +23,18 @@ client.run()
    
    # It will only store peers
    ```
+ ### INSTALLATION:
+  ```bash
+  pip install git+https://github.com/animeshxd/pyromongo
+  ```
+  Install dnspython for `mongo+srv://..` URIs
+   ```bash
+   pip install dnspython
+    
+   # for Termux use dnspython fork
+   apt install resolv-conf
+   pip install git+https://github.com/animeshxd/dnspython
+   ```
+  Check other required dependencies for motor
+  https://motor.readthedocs.io/en/stable/installation.html#dependencies
+  
