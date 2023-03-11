@@ -106,7 +106,7 @@ class MongoStorage(Storage):
         if r is None:
             raise KeyError(f"Username not found: {username}")
 
-        if abs(time.time() - r['last']) > self.USERNAME_TTL:
+        if abs(time.time() - r['last_update_on']) > self.USERNAME_TTL:
             raise KeyError(f"Username expired: {username}")
 
         return get_input_peer(*list(r.values())[:3])
