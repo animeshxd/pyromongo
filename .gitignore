@@ -4,3 +4,5 @@ build/
 diat/
 pyromongo.egg-info
 dist
+.vscode/
+.idea/
