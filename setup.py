@@ -11,7 +11,7 @@ setup(
     description="Mongo Session Storage for pyrogram",
     long_description=readme,
     long_description_content_type="text/markdown",
-    
+
     packages=["pyromongo"],
 
     url="https://github.com/animeshxd/pyromongo",
@@ -34,5 +34,13 @@ setup(
     keywords="async mongo session storage pyrogram",
     python_requires=">=3.7.0",
     install_requires=requires,
-
+    extras_require={
+        "encryption": ["motor[encryption]"],
+        "ocsp": ["motor[ocsp]"],
+        "snappy": ["motor[snappy]"],
+        "zstd": ["motor[zstd]"],
+        "aws": ["motor[aws]"],
+        "srv": ["motor[srv]"],
+        "gssapi": ["motor[gssapi]"],
+    }
 )
