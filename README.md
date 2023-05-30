@@ -25,15 +25,22 @@ client.run()
    ```
  ### INSTALLATION:
   ```bash
+  pip install pyromongo
+  
   pip install git+https://github.com/animeshxd/pyromongo
   ```
   Install dnspython for `mongo+srv://..` URIs
    ```bash
    pip install dnspython
+   # or pip install -U pyromongo[srv]
     
    # for Termux use dnspython fork
    apt install resolv-conf
    pip install git+https://github.com/animeshxd/dnspython
+   ```
+   Install with all extra dependencies
+   ```bash
+   pip install "pyromongo[gssapi,aws,ocsp,snappy,srv,zstd,encryption]"
    ```
   Check other required dependencies for motor
   https://motor.readthedocs.io/en/stable/installation.html#dependencies
