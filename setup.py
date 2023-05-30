@@ -42,5 +42,6 @@ setup(
         "aws": ["motor[aws]"],
         "srv": ["motor[srv]"],
         "gssapi": ["motor[gssapi]"],
-    }
+    },
+    license='MIT'
 )
