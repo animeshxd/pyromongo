@@ -26,7 +26,8 @@ client.run()
  ### INSTALLATION:
   ```bash
   pip install pyromongo
-  
+
+  # Install from git
   pip install git+https://github.com/animeshxd/pyromongo
   ```
   Install dnspython for `mongo+srv://..` URIs
