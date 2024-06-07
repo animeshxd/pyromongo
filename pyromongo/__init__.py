@@ -39,20 +39,20 @@ class MongoStorage(Storage):
         user_id   INTEGER,
         is_bot    INTEGER
         """
-        if await self._session.find_one({'_id': 0}, {}):
-            return
-        await self._session.insert_one(
+        await self._session.update_one(
+            {'_id': 0},
             {
-                '_id': 0,
-                'dc_id': 2,
-                'api_id': None,
-                'test_mode': None,
-                'auth_key': b'',
-                'date': 0,
-                'user_id': 0,
-                'is_bot': 0,
-
-            }
+                '$setOnInsert': {
+                    'dc_id': 2,
+                    'api_id': None,
+                    'test_mode': None,
+                    'auth_key': b'',
+                    'date': 0,
+                    'user_id': 0,
+                    'is_bot': 0,
+                }
+            },
+            upsert=True,
         )
 
     async def save(self):
