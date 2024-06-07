@@ -10,17 +10,18 @@ from pyrogram.storage.sqlite_storage import get_input_peer
 
 
 class MongoStorage(Storage):
-    """
-    database: motor.motor_asyncio.AsyncIOMotorDatabase
-        required database object of motor
 
-    remove_peers: bool = False
-        remove peers collection on logout (by default, it will not remove peers)
-    """
     lock: asyncio.Lock
     USERNAME_TTL = 8 * 60 * 60
 
     def __init__(self, database: AsyncIOMotorDatabase, remove_peers: bool = False):
+        """
+        Initialize a MongoStorage instance.
+
+        Args:
+            database (AsyncIOMotorDatabase): The database instance to use.
+            remove_peers (bool, optional): Whether to remove peers on logout. Defaults to False.
+        """
         super().__init__('')
         self.lock = asyncio.Lock()
         self.database = database
