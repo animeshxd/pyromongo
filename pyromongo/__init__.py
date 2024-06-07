@@ -81,9 +81,9 @@ class MongoStorage(Storage):
             UpdateOne(
                 {'_id': i[0]},
                 {'$set': {
-                    'access_hash': i[1], 
-                    'type': i[2], 
-                    'username': i[3], 
+                    'access_hash': i[1],
+                    'type': i[2],
+                    'username': i[3],
                     'phone_number': i[4],
                     'last_update_on': s
                 }},
