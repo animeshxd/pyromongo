@@ -7,7 +7,7 @@ with open("requirements.txt", encoding="utf-8") as r:
 
 setup(
     name="pyromongo",
-    version="0.0.8",
+    version="0.0.9",
     description="Mongo Session Storage for pyrogram",
     long_description=readme,
     long_description_content_type="text/markdown",
