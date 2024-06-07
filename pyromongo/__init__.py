@@ -54,6 +54,9 @@ class MongoStorage(Storage):
             },
             upsert=True,
         )
+        await self._peer.create_index('id', unique=True)
+        await self._peer.create_index('username', unique=True)
+        await self._peer.create_index('phone_number', unique=True)
 
     async def save(self):
         pass
@@ -66,6 +69,7 @@ class MongoStorage(Storage):
             await self._session.delete_one({'_id': 0})
             if self._remove_peers:
                 await self._peer.delete_many({})
+                await self._peer.drop_indexes()
         except Exception as _:
             return
 
