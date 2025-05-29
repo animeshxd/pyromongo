@@ -14,19 +14,21 @@ class MongoStorage(Storage):
     lock: asyncio.Lock
     USERNAME_TTL = 8 * 60 * 60
 
-    def __init__(self, database: AsyncIOMotorDatabase, remove_peers: bool = False):
+    def __init__(self, database: AsyncIOMotorDatabase, remove_peers: bool = False, peers_collection_name: str = "peers", session_collection_name: str = "session"):
         """
         Initialize a MongoStorage instance.
 
         Args:
             database (AsyncIOMotorDatabase): The database instance to use.
             remove_peers (bool, optional): Whether to remove peers on logout. Defaults to False.
+            peers_collection_name (str, optional): Name of the peers collection. Defaults to "peers".
+            session_collection_name (str, optional): Name of the session collection. Defaults to "session".
         """
         super().__init__('')
         self.lock = asyncio.Lock()
         self.database = database
-        self._peer = database['peers']
-        self._session = database['session']
+        self._peer = database[peers_collection_name]
+        self._session = database[session_collection_name]
         self._remove_peers = remove_peers
 
     async def open(self):
