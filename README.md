@@ -1,6 +1,6 @@
 # pyromongo
 ## INTRODUCTION 
-Persistent Session Storage for Pyrogram with MongoDB
+Persistent Session Storage for Pyrogram and its forks with MongoDB
 
 ```python
 from pyrogram.client import Client
@@ -14,6 +14,18 @@ client.storage = MongoStorage(mongo["pyrogram"], remove_peers=False) # use remov
 
 client.run()
 ```
+
+### Custom Collection Names
+```python
+# Use custom collection names for peers and session data
+client.storage = MongoStorage(
+    mongo["pyrogram"], 
+    remove_peers=False,
+    peers_collection_name="my_peers",
+    session_collection_name="my_session"
+)
+```
+
 ## Note:
   ❌ It will not work with the pyrogram context manager.
    ```python
@@ -45,4 +57,4 @@ client.run()
    ```
   Check other required dependencies for motor
   https://motor.readthedocs.io/en/stable/installation.html#dependencies
-  
+
